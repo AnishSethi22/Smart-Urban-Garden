@@ -1,0 +1,80 @@
+/* Global Styles */
+:root {
+    --primary-color: #34495e;
+    --secondary-color: #2ecc71;
+    --text-color: #333;
+    --background-color: #f5f5f5;
+    --glow-color: rgba(46, 204, 113, 0.6); /* Greenish glow */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Section Styles */
+.section {
+    background-color:rgba(99, 170, 198, 0.5);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default shadow */
+}
+
+/* Glow Effect */
+.energy-solutions::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    background: var(--glow-color);
+    border-radius: 15px;
+    z-index: -1; /* Place the glow behind the content */
+    filter: blur(20px); /* Soft blur for the glow effect */
+}
+
+/* Content Styling */
+h2, h3 {
+    color: var(--primary-color);
+}
+
+h3 {
+    margin-top: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+
+/* Image Styles */
+.hero-image {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhance the typography for better readability */
+p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Add responsive design rules */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+}

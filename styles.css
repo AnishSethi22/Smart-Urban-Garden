@@ -1,0 +1,348 @@
+/* Global Styles */
+:root {
+  --primary-color: #34495e;
+  --secondary-color: #2ecc71;
+  --text-color: #333;
+  --background-color: #f5f5f5;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Header Styles */
+#main-header {
+  background-color: var(--primary-color);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+#main-header h1 {
+  color: white;
+  margin: 0;
+}
+
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Navigation Styles */
+#navbar {
+  background-color: var(--primary-color);
+  padding: 10px 0;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 70px;
+  z-index: 999;
+}
+
+#navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#navbar a:hover, #navbar a.active {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+#navbar a i {
+  margin-right: 5px;
+}
+
+/* Main Content Styles */
+#content {
+  margin-top: 130px;
+  padding: 20px;
+}
+
+.section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+/* Solutions Section Styles */
+.solutions-section {
+  background: var(--background-color);
+  padding: 50px 0;
+}
+
+.solution-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.solution {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.solution:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.solution-image {
+  max-width: 100%;
+  height: auto;
+  border-bottom: 2px solid #ecf0f1;
+  margin-bottom: 15px;
+}
+
+.solution h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+/* CTA Button Styles */
+.cta-button {
+  display: inline-block;
+  background-color: var(--secondary-color);
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #27ae60;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+}
+
+form button {
+  padding: 10px 20px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #27ae60;
+}
+
+/* Footer Styles */
+footer {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #menu-toggle {
+      display: block;
+  }
+
+  #navbar {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      top: 70px;
+  }
+
+  #navbar.active {
+      display: flex;
+  }
+
+  #navbar a {
+      width: 100%;
+      padding: 15px 0;
+      margin: 0;
+  }
+
+  #content {
+      margin-top: 90px;
+  }
+
+  .container {
+      width: 95%;
+  }
+}
+
+/* Image Styles */
+.hero-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced "How It Works" Links */
+.work-link a {
+  display: block;
+  padding: 12px 24px;
+  margin: 10px 0;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.work-link a:hover {
+  background-color: #2c3e50;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.work-link a:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Community Section Styles */
+.community-section {
+  background: #f4f4f4;
+  padding: 2rem 0;
+}
+
+.community-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.community-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.community-highlights {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.community-highlights .highlight {
+  flex: 1;
+  background: #fff;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.community-highlights .highlight h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-highlights .highlight p {
+  margin-bottom: 1rem;
+}
+
+.community-highlights .highlight .cta-button {
+  display: inline-block;
+  background: #28a745;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.community-highlights .highlight .cta-button:hover {
+  background: #218838;
+}
+
+.testimonials {
+  margin-top: 2rem;
+}
+
+.testimonials h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.testimonials .testimonial {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonials .testimonial img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-right: 1rem;
+}
+
+.testimonials .testimonial blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+.testimonials .testimonial cite {
+  display: block;
+  margin-top: 0.5rem;
+  color: #555;
+}

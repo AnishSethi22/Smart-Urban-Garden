@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Information with ML</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin: 0;
+        }
+        main {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        #state-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #333;
+            text-transform: uppercase;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        #state-info {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .info-line {
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #e8f5e9;
+            border-left: 5px solid #4CAF50;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        select, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #prediction-result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="state-title"></h1>
+    </header>
+    <main>
+        <div id="state-info"></div>
+        <div>
+            <label for="crop-select">Select Crop Type:</label>
+            <select id="crop-select">
+                <option value="">-- Select Crop --</option>
+                <optgroup label="Grain Crops">
+                    <option value="rice">Rice</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="maize">Maize</option>
+                    <option value="pulses">Pulses</option>
+                    <option value="millets">Millets</option>
+                </optgroup>
+                <optgroup label="Commercial Crops">
+                    <option value="jute">Jute</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="sugarcane">Sugarcane</option>
+                    <option value="oilseeds">Oilseeds</option>
+                    <option value="tobacco">Tobacco</option>
+                </optgroup>
+                <optgroup label="Plantation Crops">
+                    <option value="rubber">Rubber</option>
+                    <option value="coffee">Coffee</option>
+                    <option value="tea">Tea</option>
+                    <option value="coconut">Coconut</option>
+                </optgroup>
+                <optgroup label="Horticulture Crops">
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                </optgroup>
+            </select>
+            <button id="predict-button">Predict Soil Condition & Irrigation</button>
+        </div>
+        <div id="prediction-result"></div>
+        <a href="index.html">Back to Home</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 State Info. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const state = urlParams.get('state');
+
+        const stateInfo = {
+            "andaman-nicobar": {
+                irrigation: "Drip irrigation is commonly used.",
+                soil: "Sandy and loamy soils are prevalent.",
+                funFact: "Andaman and Nicobar Islands are known for their biodiversity."
+            },
+            "andhra-pradesh": {
+                irrigation: "Both surface and drip irrigation methods are utilized.",
+                soil: "Predominantly red and black soils.",
+                funFact: "Famous for its spicy cuisine and rich cultural heritage."
+            },
+            "arunachal-pradesh": {
+                irrigation: "Traditional methods along with surface irrigation.",
+                soil: "Alluvial and loamy soils are common.",
+                funFact: "Known for its rich biodiversity and ethnic diversity."
+            },
+            "assam": {
+                irrigation: "Flood irrigation and traditional methods are used.",
+                soil: "Alluvial soils support rice cultivation.",
+                funFact: "Famous for its tea gardens and wildlife."
+            },
+            "bihar": {
+                irrigation: "Mostly surface irrigation through canals.",
+                soil: "Alluvial soils are highly fertile.",
+                funFact: "Home to ancient Nalanda University."
+            },
+            "chhattisgarh": {
+                irrigation: "Surface irrigation and wells are common.",
+                soil: "Red and black soils are prevalent.",
+                funFact: "Rich in mineral resources and tribal culture."
+            },
+            "goa": {
+                irrigation: "Mostly drip and surface irrigation.",
+                soil: "Laterite soils suitable for cashew and rice.",
+                funFact: "Known for its beaches and Portuguese heritage."
+            },
+            "gujarat": {
+                irrigation: "Drip and surface irrigation methods are essential.",
+                soil: "Black and sandy soils support diverse crops.",
+                funFact: "Birthplace of Mahatma Gandhi."
+            },
+            "haryana": {
+                irrigation: "Surface irrigation through canals and tube wells.",
+                soil: "Alluvial soils are fertile.",
+                funFact: "Known for its agriculture and dairy industry."
+            },
+            "himachal-pradesh": {
+                irrigation: "Surface and micro-irrigation methods.",
+                soil: "Loamy and sandy soils are common.",
+                funFact: "Known for its beautiful landscapes and apples."
+            },
+            "jharkhand": {
+                irrigation: "Surface irrigation and traditional methods.",
+                soil: "Red and yellow soils are prevalent.",
+                funFact: "Rich in mineral resources and tribal culture."
+            },
+            "karnataka": {
+                irrigation: "Irrigation through tanks and rivers is common.",
+                soil: "Red and black soils support various crops.",
+                funFact: "Home to Silicon Valley of India, Bangalore."
+            },
+            "kerala": {
+                irrigation: "Drip irrigation systems are popular, especially in spice cultivation.",
+                soil: "Laterite soils retain moisture and nutrients well.",
+                funFact: "Known as 'God's Own Country' for its scenic beauty."
+            },
+            "madhya-pradesh": {
+                irrigation: "Surface irrigation and wells are commonly used.",
+                soil: "Black cotton soil is predominant.",
+                funFact: "Known for its tiger reserves and rich history."
+            },
+            "maharashtra": {
+                irrigation: "Drip and surface irrigation methods are widely practiced.",
+                soil: "Black and red soils are suitable for various crops.",
+                funFact: "Home to Bollywood, the Indian film industry."
+            },
+            "manipur": {
+                irrigation: "Traditional methods along with surface irrigation.",
+                soil: "Alluvial and clayey soils are common.",
+                funFact: "Known for its rich culture and dance forms."
+            },
+            "meghalaya": {
+                irrigation: "Surface irrigation and traditional methods.",
+                soil: "Laterite and alluvial soils are prevalent.",
+                funFact: "Famous for its living root bridges."
+            },
+            "mizoram": {
+                irrigation: "Traditional methods and surface irrigation.",
+                soil: "Loamy and clayey soils are common.",
+                funFact: "Known for its lush green hills and culture."
+            },
+            "nagaland": {
+                irrigation: "Traditional and surface irrigation methods.",
+                soil: "Loamy and clayey soils are prevalent.",
+                funFact: "Home to diverse tribes and rich traditions."
+            },
+            "odisha": {
+                irrigation: "Surface and well irrigation methods are common.",
+                soil: "Alluvial soils are suitable for paddy cultivation.",
+                funFact: "Known for its temples and rich culture."
+            },
+            "punjab": {
+                irrigation: "Surface irrigation is dominant, supported by canals.",
+                soil: "Alluvial soils are highly fertile.",
+                funFact: "Known as the 'Granary of India' for its extensive agriculture."
+            },
+            "rajasthan": {
+                irrigation: "Drip and surface irrigation methods are widely practiced.",
+                soil: "Sandy and loamy soils support drought-resistant crops.",
+                funFact: "Known for its deserts and vibrant culture."
+            },
+            "sikkim": {
+                irrigation: "Irrigation through traditional methods.",
+                soil: "Loamy and alluvial soils are common.",
+                funFact: "Known for its biodiversity and organic farming."
+            },
+            "tamil-nadu": {
+                irrigation: "Irrigation through rivers and reservoirs is common.",
+                soil: "Mostly red and black soils.",
+                funFact: "Renowned for its temples and classical dance forms."
+            },
+            "telangana": {
+                irrigation: "Surface and drip irrigation methods are used.",
+                soil: "Black and red soils are predominant.",
+                funFact: "Known for its rich cultural heritage."
+            },
+            "tripura": {
+                irrigation: "Traditional and surface irrigation methods.",
+                soil: "Loamy and clayey soils are common.",
+                funFact: "Known for its natural beauty and tribal culture."
+            },
+            "uttar-pradesh": {
+                irrigation: "Surface and tube well irrigation methods are widely used.",
+                soil: "Alluvial soils are highly fertile.",
+                funFact: "Home to the Taj Mahal, a UNESCO World Heritage Site."
+            },
+            "uttarakhand": {
+                irrigation: "Traditional and surface irrigation methods.",
+                soil: "Loamy and alluvial soils are common.",
+                funFact: "Known for its mountains and pilgrimage sites."
+            },
+            "west-bengal": {
+                irrigation: "Flood irrigation is common.",
+                soil: "Alluvial soils are highly fertile.",
+                funFact: "Famous for its literature, art, and festivals."
+            }
+        };
+
+        function handlePrediction() {
+            const cropSelect = document.getElementById('crop-select').value;
+            let irrigationMethod, soilCondition;
+
+            switch (cropSelect) {
+                case 'rice':
+                    irrigationMethod = "Flood Irrigation";
+                    soilCondition = "Loamy soil with good moisture retention.";
+                    break;
+                case 'wheat':
+                    irrigationMethod = "Surface Irrigation";
+                    soilCondition = "Well-drained sandy soil.";
+                    break;
+                case 'maize':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Loamy soil with good drainage.";
+                    break;
+                case 'pulses':
+                    irrigationMethod = "Surface Irrigation";
+                    soilCondition = "Fertile alluvial soil.";
+                    break;
+                case 'millets':
+                    irrigationMethod = "Rainfed Irrigation";
+                    soilCondition = "Sandy and well-drained soil.";
+                    break;
+                case 'jute':
+                    irrigationMethod = "Flood Irrigation";
+                    soilCondition = "Clayey and fertile soil.";
+                    break;
+                case 'cotton':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Black soil with good moisture retention.";
+                    break;
+                case 'sugarcane':
+                    irrigationMethod = "Flood and Drip Irrigation";
+                    soilCondition = "Alluvial and fertile soil.";
+                    break;
+                case 'oilseeds':
+                    irrigationMethod = "Surface Irrigation";
+                    soilCondition = "Sandy loam soil.";
+                    break;
+                case 'tobacco':
+                    irrigationMethod = "Surface Irrigation";
+                    soilCondition = "Sandy and well-drained soil.";
+                    break;
+                case 'rubber':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Well-drained loamy soil.";
+                    break;
+                case 'coffee':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Rich, well-drained soil.";
+                    break;
+                case 'tea':
+                    irrigationMethod = "Surface Irrigation";
+                    soilCondition = "Loamy soil with high acidity.";
+                    break;
+                case 'coconut':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Sandy soil with good drainage.";
+                    break;
+                case 'vegetables':
+                    irrigationMethod = "Drip and Surface Irrigation";
+                    soilCondition = "Fertile, well-drained soil.";
+                    break;
+                case 'fruits':
+                    irrigationMethod = "Drip Irrigation";
+                    soilCondition = "Well-drained sandy loam soil.";
+                    break;
+                default:
+                    document.getElementById('prediction-result').innerText = "Please select a crop type.";
+                    return;
+            }
+
+            document.getElementById('prediction-result').innerText = 
+                `Predicted Irrigation Method: ${irrigationMethod}\n` +
+                `Predicted Soil Condition: ${soilCondition}`;
+        }
+
+        document.getElementById('predict-button').addEventListener('click', handlePrediction);
+
+        (function() {
+            if (state && stateInfo[state]) {
+                document.getElementById('state-title').innerText = state.replace(/-/g, ' ').toUpperCase();
+                const info = stateInfo[state];
+                document.getElementById('state-info').innerHTML = `
+                    <div class="info-line">${info.irrigation}</div>
+                    <div class="info-line">${info.soil}</div>
+                    <div class="info-line"><strong>Fun Fact:</strong> ${info.funFact}</div>
+                `;
+            } else {
+                document.getElementById('state-info').innerText = "No information available.";
+            }
+        })();
+    </script>
+</body>
+</html>

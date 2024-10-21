@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="https://websim.createdetail.com/soil-monitoring/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Monitoring - Smart Urban Garden Comic</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .comic-panel {
+            background-color: white;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            margin-bottom: 20px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .comic-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5em;
+            text-align: center;
+            color: #FF5733;
+            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 20px;
+            transform: rotate(-2deg);
+        }
+
+        .comic-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .comic-image {
+            width: 100%;
+            height: auto;
+            border: 3px solid #000;
+            margin-bottom: 15px;
+        }
+
+        .comic-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .comic-list li {
+            margin-bottom: 10px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .comic-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #FF5733;
+            font-size: 1.2em;
+        }
+
+        .speech-bubble {
+            background-color: #fff;
+            border: 3px solid #000;
+            border-radius: 20px;
+            padding: 15px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            border-width: 20px 20px 0;
+            border-style: solid;
+            border-color: #000 transparent;
+            display: block;
+            width: 0;
+        }
+
+        .sensor-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #FF5733;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 24px;
+            color: white;
+            border: 2px solid #000;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="comic-panel">
+        <h2 class="comic-title">Soil Monitoring: The Future of Farming!</h2>
+        
+        <div class="speech-bubble">
+            <p class="comic-text">Hey there, gardeners and farmers! Ever wondered how we can make our plants happier? Let me introduce you to the amazing world of soil monitoring!</p>
+        </div>
+
+        <!--<img src="soil technology.jpg" alt="Advanced soil monitoring system in action, comic style illustration showing futuristic sensors in a lush field" class="comic-image">-->
+
+        <p class="comic-text">Soil monitoring is like giving your garden a high-tech health check-up! It uses super cool sensors to collect data about what's happening underground. Let's see how this magic works!</p>
+
+        <h3 style="font-family: 'Bangers', cursive; color: #FF5733;">The Incredible IoT Soil Monitoring Adventure:</h3>
+
+        <ul class="comic-list">
+            <li>
+                <div class="sensor-icon pulse">🌡</div>
+                <strong>Super Sensors:</strong> These little gadgets are like spies in your soil, measuring everything from temperature to moisture!
+            </li>
+            <li>
+                <div class="sensor-icon pulse">📡</div>
+                <strong>Data Detectives:</strong> The sensors collect clues and send them to a big brain in the cloud for analysis.
+            </li>
+            <li>
+                <div class="sensor-icon pulse">🧠</div>
+                <strong>Smart Thinking:</strong> Clever computer programs crunch the numbers and give advice on what to grow and how to care for it.
+            </li>
+            <li>
+                <div class="sensor-icon pulse">💾</div>
+                <strong>Memory Keeper:</strong> The system remembers everything about your field's history, like a digital diary.
+            </li>
+            <li>
+                <div class="sensor-icon pulse">📱</div>
+                <strong>Remote Control:</strong> Farmers can check on their fields from anywhere, just like watching their plants on TV!
+            </li>
+            <li>
+                <div class="sensor-icon pulse">📊</div>
+                <strong>Picture Perfect:</strong> All that data turns into cool charts and graphs, making it easy to spot trends and make your garden grow better!
+            </li>
+        </ul>
+
+        <div class="speech-bubble">
+            <p class="comic-text">And guess what? This super-smart way of farming has a cool nickname: <strong>Smart Agriculture</strong> or <strong>Smart Farming</strong>. It's like giving your garden a university degree!</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const icons = document.querySelectorAll('.sensor-icon');
+            icons.forEach((icon, index) => {
+                icon.style.animationDelay = `${index * 0.5}s`;
+            });
+        });
+    </script>
+</body>
+</html>

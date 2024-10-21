@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Urban Garden - Sustainable Urban Agriculture</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9f5ff; /* Light background */
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid #4CAF50;
+        }
+        nav a {
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #575757;
+        }
+        #info-section {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        #states-dropdown {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        #ok-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        #ok-button:hover {
+            background-color: #45a049;
+        }
+        #info-display {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            #info-section {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <h1 id="title1">Smart Urban Garden</h1>
+        <button id="menu-toggle" aria-label="Toggle Navigation Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <nav id="navbar" aria-label="Main Navigation">
+        <a href="#home" data-section="home" aria-label="Go to Home"><i class="fas fa-home"></i> Home</a>
+        <a href="#how-it-works" data-section="how-it-works" aria-label="How It Works"><i class="fas fa-cogs"></i> How It Works</a>
+        <a href="#solutions" data-section="solutions" aria-label="Our Solutions"><i class="fas fa-leaf"></i> Solutions</a>
+        <a href="#community" data-section="community" aria-label="Community"><i class="fas fa-users"></i> Community</a>
+        <a href="#contact" data-section="contact" aria-label="Contact Us"><i class="fas fa-envelope"></i> Contact Us</a>
+        <div id="info-section">
+            <label for="states-dropdown" style="color: white; margin-right: 10px;">Select State:</label>
+            <select id="states-dropdown" aria-label="States of India">
+                <option value="">--Select--</option>
+                <option value="andhra-pradesh">Andhra Pradesh</option>
+                <option value="arunachal-pradesh">Arunachal Pradesh</option>
+                <option value="assam">Assam</option>
+                <option value="bihar">Bihar</option>
+                <option value="goa">Goa</option>
+                <option value="gujarat">Gujarat</option>
+                <option value="haryana">Haryana</option>
+                <option value="himachal-pradesh">Himachal Pradesh</option>
+                <option value="jharkhand">Jharkhand</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="kerala">Kerala</option>
+                <option value="madhya-pradesh">Madhya Pradesh</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="manipur">Manipur</option>
+                <option value="meghalaya">Meghalaya</option>
+                <option value="mizoram">Mizoram</option>
+                <option value="nagaland">Nagaland</option>
+                <option value="odisha">Odisha</option>
+                <option value="punjab">Punjab</option>
+                <option value="rajasthan">Rajasthan</option>
+                <option value="sikkim">Sikkim</option>
+                <option value="tamil-nadu">Tamil Nadu</option>
+                <option value="telangana">Telangana</option>
+                <option value="tripura">Tripura</option>
+                <option value="uttar-pradesh">Uttar Pradesh</option>
+                <option value="uttarakhand">Uttarakhand</option>
+                <option value="west-bengal">West Bengal</option>
+                <option value="chhattisgarh">Chhattisgarh</option>
+                <option value="delhi">Delhi</option>
+            </select>
+            <button id="ok-button" style="display: none;">OK</button>
+        </div>
+    </nav>
+
+    <main id="content">
+        <!-- Content will be loaded here dynamically -->
+        <div id="info-display"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Smart Urban Garden. All Rights Reserved.</p>
+    </footer>
+
+    <script src="scripts.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statesDropdown = document.getElementById('states-dropdown');
+            const okButton = document.getElementById('ok-button');
+
+            statesDropdown.addEventListener('change', function() {
+                const selectedState = statesDropdown.value;
+                okButton.style.display = selectedState ? 'inline' : 'none'; // Show or hide the OK button
+            });
+
+            okButton.addEventListener('click', function() {
+                const selectedState = statesDropdown.value;
+                if (selectedState) {
+                    // Redirect to the state-info.html page with the selected state as a query parameter
+                    window.location.href = `state-info.html?state=${selectedState}`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
